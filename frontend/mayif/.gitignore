@@ -1,0 +1,35 @@
+# Flutter/Dart specific
+.dart_tool/
+.packages
+.flutter-plugins
+.flutter-plugins-dependencies
+.idea/
+.vscode/
+
+# Build artifacts
+build/
+*.iml
+*.lock
+
+# Dependency caching
+.pub-cache/
+
+# Android specific
+android/app/src/main/kotlin/com/example/mayif/
+android/app/src/debug/
+android/app/src/profile/
+android/gradle/
+android/.gradle/
+android/local.properties
+
+# iOS specific
+ios/.symlinks/
+ios/Flutter/.last_build_id
+ios/Pods/
+
+# VS Code specific
+.vscode/
+
+# Other
+.DS_Store
+*.log
