@@ -37,9 +37,15 @@ CORS_ALLOWED_ORIGINS = [
 # Application definition
 
 INSTALLED_APPS = [
-    'api',
-    'rest_framework',
-    'corsheaders',
+    'services', # gestion des services
+    'support', # gestion du support
+    'reviews', # gestion des avis
+    'reservations', # gestion des réservations
+    'users', # gestion des utilisateurs
+    'api', # gestion des API
+    'rest_framework', # gestion des API REST
+    'rest_framework_simplejwt', # gestion des tokens JWT
+    'corsheaders', # gestion des CORS
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -129,3 +135,29 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+AUTH_USER_MODEL = 'users.Utilisateur'
+
+
+
+
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated', # Par défaut, tout est protégé
+    ),
+}
+
+
+from datetime import timedelta
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'AUTH_HEADER_TYPES': ('Bearer',),
+}
+
+
