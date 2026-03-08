@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework', # gestion des API REST
     'rest_framework_simplejwt', # gestion des tokens JWT
     'corsheaders', # gestion des CORS
+    'core', #pour gérer les modèles 
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -1,0 +1,195 @@
+1. Classe Utilisateur
+
+Attributs :
+
+id_utilisateur : int
+
+nom : string
+
+prenom : string
+
+email : string
+
+mot_de_passe : string
+
+Méthodes :
+
+seConnecter()
+
+2. Classe Administrateur
+
+(hérite de Utilisateur)
+
+Méthodes :
+
+gererUtilisateurs()
+
+consulterStatistiques()
+
+modererAvis()
+
+3. Classe EquipeSupport
+
+(hérite de Utilisateur)
+
+Attributs :
+
+idAgent : int
+
+nom : string
+
+role : string
+
+email : string
+
+Méthodes :
+
+consulterTickets()
+
+traiterTicket(idTicket)
+
+envoyerReponse()
+
+4. Classe Touriste
+
+(hérite de Utilisateur)
+
+Méthodes :
+
+reserverService()
+
+laisserAvis()
+
+ouvrirTicket()
+
+5. Classe Pros
+
+(hérite de Utilisateur)
+
+Méthodes :
+
+ajouterService()
+
+creerEvenement()
+
+consulterReservations()
+
+6. Classe TicketSupport
+
+Attributs :
+
+id_ticket : int
+
+sujet : string
+
+message : string
+
+statut : string
+
+date_ouverture : date
+
+id_utilisateur : int
+
+Méthodes :
+
+ouvrirTicket()
+
+repondreTicket()
+
+7. Classe Reservation
+
+Attributs :
+
+id_reservation : int
+
+date_reservation : date
+
+statut : string (confirmée / en attente)
+
+id_utilisateur : int
+
+id_service : int
+
+Méthodes :
+
+confirmer()
+
+annuler()
+
+8. Classe Recommandation
+
+Attributs :
+
+id_recommandation : int
+
+titre : string
+
+description : string
+
+id_utilisateur : int
+
+Méthodes :
+
+publier()
+
+9. Classe Evenement
+
+Attributs :
+
+id_evenement : int
+
+nom : string
+
+lieu : string
+
+date : date
+
+id_createur : int (FK → Utilisateur)
+
+Méthodes :
+
+ajouterService()
+
+creerEvenement()
+
+consulterReservations()
+
+10. Classe Service
+
+Attributs :
+
+id_service : int
+
+nom : string
+
+type : string
+
+prix : string
+
+adresse : string
+
+id_fournisseur : int
+
+Méthodes :
+
+afficherDetails()
+
+11. Classe Avis
+
+Attributs :
+
+id_avis : int
+
+note : int
+
+commentaire : string
+
+date_avis : date
+
+id_utilisateur : int
+
+id_service : int
+
+Méthodes :
+
+publierAvis()
