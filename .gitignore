@@ -32,12 +32,24 @@ static/
 .Trashes
 Thumbs.db
 
-# text 
+# Documents et Textes (on ignore tout sauf les README)
+*.txt
+*.md
+!README.md
+*.pdf
+
+# Postman (exclu de Git)
+postman/
+
+# Spécifiques Python et divers
+code.py
+.DS_Store
+.Trashes
+Thumbs.db
+dia_classe.txt
+Diagramme de packages.txt
 notes.txt
-Bon j'ai un projet, que j'ai mis su.txt
 reponse_mario.txt
 reponse_paola.txt
-diag_class.txt
-
-# fichier python
-code.py
+JOURNAL_DE_BORD.txt
+PLANNING.pdf

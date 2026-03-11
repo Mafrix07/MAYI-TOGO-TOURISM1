@@ -1,121 +1,218 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MayiApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MayiApp extends StatelessWidget {
+  const MayiApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'Mayi - Togo Tourism',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF1A237E), // Bleu profond
+          primary: const Color(0xFF1A237E),
+          secondary: const Color(0xFFFFC107), // Ambre/Or
+          surface: const Color(0xFFF8F9FA),
+        ),
+        textTheme: const TextTheme(
+          headlineLarge: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF1A237E)),
+          titleLarge: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+        ),
+        cardTheme: CardThemeData(
+          elevation: 4,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        ),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const HomePage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+class _HomePageState extends State<HomePage> {
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 30),
+                // Header section
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Bienvenue au Togo,", style: TextStyle(color: Colors.grey[600], fontSize: 16)),
+                        const Text("Explorez le Togo !", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Color(0xFF1A237E))),
+                      ],
+                    ),
+                    const CircleAvatar(
+                      radius: 25,
+                      backgroundImage: NetworkImage('https://i.pravatar.cc/150?u=a042581f4e29026704d'),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 30),
+                // Search Bar
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [BoxShadow(color: Colors.black.withAlpha(12), blurRadius: 10, offset: const Offset(0, 5))],
+                  ),
+                  child: const TextField(
+                    decoration: InputDecoration(
+                      hintText: "Où voulez-vous aller ?",
+                      border: InputBorder.none,
+                      icon: Icon(Icons.search, color: Color(0xFF1A237E)),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 30),
+                // Categories
+                const Text("Catégories", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 15),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      _buildCategoryItem(Icons.hotel, "Hôtels", true),
+                      _buildCategoryItem(Icons.restaurant, "Restos", false),
+                      _buildCategoryItem(Icons.map, "Guides", false),
+                      _buildCategoryItem(Icons.car_rental, "Transport", false),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 30),
+                // Top Services / Recommendations
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text("Recommandations", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                    TextButton(onPressed: () {}, child: const Text("Voir tout", style: TextStyle(color: Color(0xFF1A237E)))),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                // horizontal list of service cards
+                SizedBox(
+                  height: 300,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      _buildServiceCard("Hôtel du 2 Février", "Lomé, Togo", "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=500", "75 000 FCFA"),
+                      _buildServiceCard("Cascade de Kpimé", "Kpalimé", "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=500", "Gratuit"),
+                      _buildServiceCard("Plage de Baguida", "Baguida", "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500", "1 000 FCFA"),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 30),
+              ],
+            ),
+          ),
+        ),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: (index) => setState(() => _selectedIndex = index),
+        selectedItemColor: const Color(0xFF1A237E),
+        unselectedItemColor: Colors.grey,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home_rounded), label: 'Accueil'),
+          BottomNavigationBarItem(icon: Icon(Icons.favorite_rounded), label: 'Favoris'),
+          BottomNavigationBarItem(icon: Icon(Icons.confirmation_number_rounded), label: 'Résas'),
+          BottomNavigationBarItem(icon: Icon(Icons.person_rounded), label: 'Profil'),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCategoryItem(IconData icon, String label, bool isSelected) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 15.0),
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(15),
+            decoration: BoxDecoration(
+              color: isSelected ? const Color(0xFF1A237E) : Colors.white,
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: isSelected ? null : [BoxShadow(color: Colors.black.withAlpha(12), blurRadius: 10)],
+            ),
+            child: Icon(icon, color: isSelected ? Colors.white : const Color(0xFF1A237E)),
+          ),
+          const SizedBox(height: 8),
+          Text(label, style: TextStyle(fontWeight: isSelected ? FontWeight.bold : FontWeight.normal, fontSize: 13)),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildServiceCard(String title, String location, String imageUrl, String price) {
+    return Container(
+      width: 220,
+      margin: const EdgeInsets.only(right: 20),
+      child: Card(
+        clipBehavior: Clip.antiAlias,
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: .center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            Stack(
+              children: [
+                Image.network(imageUrl, height: 160, width: double.infinity, fit: BoxFit.cover),
+                Positioned(
+                  top: 10,
+                  right: 10,
+                  child: Container(
+                    padding: const EdgeInsets.all(5),
+                    decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+                    child: const Icon(Icons.favorite_border, size: 18, color: Colors.red),
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16), maxLines: 1, overflow: TextOverflow.ellipsis),
+                  const SizedBox(height: 4),
+                  Row(
+                    children: [
+                      const Icon(Icons.location_on, size: 14, color: Colors.grey),
+                      const SizedBox(width: 4),
+                      Text(location, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Text(price, style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF1A237E), fontSize: 14)),
+                ],
+              ),
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }

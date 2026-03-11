@@ -1,3 +1,34 @@
-from django.shortcuts import render
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status, permissions
+from .serializers import InscriptionSerializer, UtilisateurSerializer
 
-# Create your views here.
+class InscriptionView(APIView):
+    """Inscription de nouveaux utilisateurs (Touristes ou Pros)"""
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        serializer = InscriptionSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            return Response({
+                "success": True, 
+                "message": "Compte créé avec succès.",
+                "user": UtilisateurSerializer(user).data
+            }, status=status.HTTP_201_CREATED)
+        return Response({"success": False, "errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+class MonProfilView(APIView):
+    """Gestion du profil utilisateur connecté"""
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        serializer = UtilisateurSerializer(request.user)
+        return Response(serializer.data)
+
+    def patch(self, request):
+        serializer = UtilisateurSerializer(request.user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"success": True, "message": "Profil mis à jour."})
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
