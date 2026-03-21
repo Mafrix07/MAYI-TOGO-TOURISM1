@@ -1,9 +1,13 @@
+from django.db.models import Sum, Count 
+from django.db.models.functions import TruncMonth 
 from rest_framework import viewsets, permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.db import transaction
 from .models import Service, Reservation, TicketSupport, Evenement, Avis, Recommandation
 from .serializers import *
+from django.utils import timezone
+from datetime import timedelta
 
 # ====================================================================================================
 # SERVICES
@@ -85,3 +89,7 @@ class AvisViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(utilisateur=self.request.user)
+
+
+class DashboardView(APIView):
+    permission_classes = [permissions.IsAdminUser]  # Seulement les admins

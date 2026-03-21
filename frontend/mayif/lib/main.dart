@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'views/splash_screen.dart';
 
 void main() {
   runApp(const MayiApp());
@@ -29,10 +30,11 @@ class MayiApp extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         ),
       ),
-      home: const HomePage(),
+      home: const SplashScreen(),
     );
   }
 }
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -121,9 +123,9 @@ class _HomePageState extends State<HomePage> {
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     children: [
-                      _buildServiceCard("Hôtel du 2 Février", "Lomé, Togo", "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=500", "75 000 FCFA"),
-                      _buildServiceCard("Cascade de Kpimé", "Kpalimé", "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=500", "Gratuit"),
-                      _buildServiceCard("Plage de Baguida", "Baguida", "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500", "1 000 FCFA"),
+                      _buildServiceCard("Hôtel du 2 Février", "Lomé, Togo", "https://tse2.mm.bing.net/th/id/OIP.F8Q5w4Rj5-8lCF2iYTV2IwHaLH?rs=1&pid=ImgDetMain&o=7&rm=3", "75 000 FCFA"),
+                      _buildServiceCard("Cascade de Kpimé", "Kpalimé", "https://explorewithsandeep.com/wp-content/uploads/2023/09/IMG_20230708_140448-1024x576.jpg", "Gratuit"),
+                      _buildServiceCard("Plage de Baguida", "Baguida", "https://quefairealome.com/wp-content/uploads/2023/10/WhatsApp-Image-2023-10-19-at-17.44.48-1024x613.jpeg", "1 000 FCFA"),
                     ],
                   ),
                 ),
