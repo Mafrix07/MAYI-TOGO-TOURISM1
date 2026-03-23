@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/6.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,6 +26,7 @@ SECRET_KEY = 'django-insecure-6gl^^f-#1m8n$h%zwfx!!-!)&283ntn=(^72xx@3p_#%%5ko@&
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    "127.0.0.1",
     "10.0.2.2"
 ]
 
@@ -50,6 +51,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt', # gestion des tokens JWT
     'corsheaders', # gestion des CORS
     'core', #pour gérer les modèles 
+    'dashboard', #pour gérer le dashboard administrateur
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -138,7 +140,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Media files (Images, uploads)
 import os
@@ -146,11 +149,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 AUTH_USER_MODEL = 'users.Utilisateur'
-
-
-
-
-
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -161,7 +159,6 @@ REST_FRAMEWORK = {
     ),
 }
 
-
 from datetime import timedelta
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
@@ -169,4 +166,8 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
 
-
+# Version Windows compatible
+DASHBOARD_ASSETS = os.path.join(BASE_DIR.parent.parent, 'frontend', 'dasher-1.0.0', 'dist', 'assets')
+STATICFILES_DIRS = [
+    DASHBOARD_ASSETS,
+]
