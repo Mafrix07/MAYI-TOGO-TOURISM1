@@ -1,0 +1,63 @@
+{% load static %}
+<div class="navbar-glass navbar navbar-expand-lg px-0 px-lg-4">
+  <div class="container-fluid px-lg-0">
+    <div class="d-flex align-items-center gap-4">
+      <div class="d-block d-lg-none">
+        <a class="text-inherit" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-menu-2">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M4 6l16 0" /><path d="M4 12l16 0" /><path d="M4 18l16 0" />
+          </svg>
+        </a>
+      </div>
+      <div class="d-none d-lg-block">
+        <a class="sidebar-toggle d-flex texttooltip p-3" href="javascript:void(0)" data-template="collapseMessage">
+          <span class="collapse-mini">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-bar-left text-secondary">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M4 12l10 0" /><path d="M4 12l4 4" /><path d="M4 12l4 -4" /><path d="M20 4l0 16" />
+            </svg>
+          </span>
+          <span class="collapse-expanded">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-bar-right text-secondary">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M20 12l-10 0" /><path d="M20 12l-4 4" /><path d="M20 12l-4 -4" /><path d="M4 4l0 16" />
+            </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+    <ul class="list-unstyled d-flex align-items-center mb-0 gap-2">
+      <!-- Theme Switcher -->
+      <li>
+        <div class="dropdown">
+          <button class="btn btn-ghost btn-icon rounded-circle d-flex align-items-center" type="button" data-bs-toggle="dropdown">
+            <i class="ti theme-icon-active lh-1 fs-5"><i class="ti theme-icon ti-sun"></i></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end shadow">
+            <li><button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="light">Light</button></li>
+            <li><button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark">Dark</button></li>
+          </ul>
+        </div>
+      </li>
+      <!-- Profile -->
+      <li class="ms-3 dropdown">
+        <a href="#" role="button" data-bs-toggle="dropdown">
+          <img src="{% static 'dashboard/images/avatar/avatar-1.jpg' %}" alt="" class="avatar avatar-sm rounded-circle" />
+        </a>
+        <div class="dropdown-menu dropdown-menu-end dropdown-menu-md p-0">
+          <div class="d-flex gap-3 align-items-center border-dashed border-bottom px-4 py-4">
+            <img src="{% static 'dashboard/images/avatar/avatar-1.jpg' %}" alt="" class="avatar avatar-md rounded-circle" />
+            <div>
+              <h4 class="mb-0 fs-5">{{ user.username|default:"Admin" }}</h4>
+              <p class="mb-0 text-secondar small">{{ user.email }}</p>
+            </div>
+          </div>
+          <div class="p-3">
+             <a href="{% url 'admin:logout' %}" class="dropdown-item">Logout</a>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

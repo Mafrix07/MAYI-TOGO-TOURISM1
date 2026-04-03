@@ -1,0 +1,135 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block title %}Profil de {{ target_user.username }} - Mayi{% endblock %}
+
+{% block content %}
+<div class="row g-6">
+  <div class="col-xl-4 col-12">
+    <!-- Profil Card -->
+    <div class="card card-lg shadow-sm border-0">
+      <div class="card-body text-center p-6">
+        <div class="avatar avatar-xxl bg-primary-subtle text-primary rounded-circle d-inline-flex align-items-center justify-content-center fw-bold fs-1 mb-4" style="width: 100px; height: 100px;">
+          {{ target_user.username|slice:":1"|upper }}
+        </div>
+        <h4 class="mb-0">{{ target_user.username }}</h4>
+        <p class="text-muted small">Membre depuis le {{ target_user.date_joined|date:"d M Y" }}</p>
+        
+        <div class="mt-4">
+           {% if target_user.role == 'admin' %}
+             <span class="badge bg-danger fs-6">Administrateur</span>
+           {% elif target_user.role == 'pro' %}
+             <span class="badge bg-success fs-6">Professionnel</span>
+           {% elif target_user.role == 'touriste' %}
+             <span class="badge bg-info fs-6">Touriste</span>
+           {% endif %}
+        </div>
+      </div>
+      <div class="card-footer bg-transparent border-top border-light p-4">
+        <div class="d-flex flex-column gap-3">
+          <div class="d-flex align-items-center gap-2">
+            <i class="ti ti-mail text-muted fs-5"></i>
+            <span>{{ target_user.email }}</span>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <i class="ti ti-phone text-muted fs-5"></i>
+            <span>{{ target_user.phone|default:"Non renseigné" }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-8 col-12">
+    <div class="card card-lg shadow-sm border-0 h-100">
+      <div class="card-header bg-transparent border-0 py-4">
+        {% if target_user.role == 'pro' %}
+          <h5 class="mb-0">Services proposés par {{ target_user.username }}</h5>
+        {% elif target_user.role == 'touriste' %}
+          <h5 class="mb-0">Historique des réservations de {{ target_user.username }}</h5>
+        {% else %}
+          <h5 class="mb-0">Détails du compte</h5>
+        {% endif %}
+      </div>
+      
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table text-nowrap mb-0 table-centered">
+            {% if target_user.role == 'pro' %}
+              <thead class="table-light">
+                <tr>
+                  <th>Service</th>
+                  <th>Prix</th>
+                  <th>Statut</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for service in services %}
+                <tr>
+                  <td class="fw-bold">{{ service.nom }}</td>
+                  <td>{{ service.prix }} FCFA</td>
+                  <td>
+                    {% if service.est_valide %}
+                      <span class="badge bg-success-subtle text-success">Actif</span>
+                    {% else %}
+                      <span class="badge bg-warning-subtle text-warning">En attente</span>
+                    {% endif %}
+                  </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="3" class="text-center py-4">Aucun service proposé.</td></tr>
+                {% endfor %}
+              </tbody>
+            {% elif target_user.role == 'touriste' %}
+              <thead class="table-light">
+                <tr>
+                  <th>Service réservé</th>
+                  <th>Date</th>
+                  <th>Statut</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for res in reservations %}
+                <tr>
+                  <td class="fw-bold">{{ res.service.nom }}</td>
+                  <td>{{ res.date_reservation|date:"d M Y" }}</td>
+                  <td>{{ res.statut }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="3" class="text-center py-4">Aucune réservation effectuée.</td></tr>
+                {% endfor %}
+              </tbody>
+            {% else %}
+              <div class="p-4">
+                <p class="text-muted">Informations administratives standard.</p>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item d-flex justify-content-between px-0">
+                    <span>Identifiant unique (ID)</span>
+                    <span class="fw-bold">#{{ target_user.id }}</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between px-0">
+                    <span>Dernière connexion</span>
+                    <span class="fw-bold text-muted">{{ target_user.last_login|date:"d M Y H:i"|default:"Jamais" }}</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between px-0">
+                    <span>Statut du compte</span>
+                    {% if target_user.is_active %}
+                      <span class="text-success fw-bold">Actif</span>
+                    {% else %}
+                      <span class="text-danger fw-bold">Désactivé</span>
+                    {% endif %}
+                  </li>
+                </ul>
+              </div>
+            {% endif %}
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mt-4">
+  <a href="{% url 'dashboard:user_list' %}" class="btn btn-light"><i class="ti ti-arrow-left me-1"></i> Retour à la liste</a>
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% load static %}
+<div id="miniSidebar">
+  <div class="brand-logo">
+    <a class="d-none d-md-flex align-items-center gap-2" href="{% url 'dashboard:index' %}">
+      <img src="{% static 'dashboard/images/brand/logo/logo-icon.svg' %}" alt="" />
+      <span class="fw-bold fs-4 site-logo-text">Mayi</span>
+    </a>
+  </div>
+  <ul class="navbar-nav flex-column mt-4">
+    <!-- Dashboard -->
+    <li class="nav-item">
+      <a class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}" href="{% url 'dashboard:index' %}">
+        <span class="nav-icon">
+          <i class="ti ti-layout-dashboard fs-4"></i>
+        </span> 
+        <span class="text">Dashboard</span>
+      </a>
+    </li>
+
+    <!-- Gestion Utilisateurs -->
+    <li class="nav-item">
+      <a class="nav-link {% if 'user' in request.resolver_match.url_name %}active{% endif %}" href="{% url 'dashboard:user_list' %}">
+        <span class="nav-icon">
+          <i class="ti ti-users fs-4"></i>
+        </span> 
+        <span class="text">Utilisateurs</span>
+      </a>
+    </li>
+
+    <!-- Services (à venir) -->
+    <li class="nav-item">
+      <a class="nav-link" href="#!">
+        <span class="nav-icon">
+          <i class="ti ti-map-pin fs-4"></i>
+        </span> 
+        <span class="text">Services</span>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<div class="offcanvasNav offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <a class="d-flex align-items-center gap-2" href="{% url 'dashboard:index' %}">
+      <img src="{% static 'dashboard/images/brand/logo/logo-icon.svg' %}" alt="" />
+      <span class="fw-bold fs-4 site-logo-text">Mayi</span>
+    </a>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body p-0">
+     <!-- Mobile Nav items identical to desktop for consistency -->
+  </div>
+</div>

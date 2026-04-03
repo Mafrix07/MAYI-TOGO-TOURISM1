@@ -14,7 +14,7 @@ from datetime import timedelta
 # ====================================================================================================
 
 class ServiceViewSet(viewsets.ModelViewSet):
-    """Tout le monde peut voir les services validés, seuls les pros créent les leurs"""
+    """Tout le monde peut voir les services validés, seuls les prof créent les leurs"""
     serializer_class = ServiceSerializer
 
     def get_queryset(self):
